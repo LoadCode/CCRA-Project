@@ -1,0 +1,6 @@
+#Este es el gitIgnore file para este repositorio.
+#Este repositorio contiene codigo del software processing, por lo tanto
+#se van a ignorar los archivos .properties propios de su IDE
+
+*.properties
+
