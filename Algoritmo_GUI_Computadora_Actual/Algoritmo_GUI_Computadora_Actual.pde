@@ -403,7 +403,7 @@ void EscribirSerial(int angulo)
   String anguloCadena;
   anguloCadena = Integer.toString(angulo);
   miPuerto.write(anguloCadena);
-  miPuerto.write(10);
+  miPuerto.write(0);//miPuerto.write(10); //El 10 es caracter '\n' y el 0 es el caracter nulo. para poder usar la función strcmp() de C
 }
 
 void DibujarBrazoSoporte()
