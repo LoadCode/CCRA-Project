@@ -4,7 +4,7 @@
 * El siguiente código hace parte del proyecto de entrenamiento, el programa de este archivo es el encargado de realizar la lectura (cominucación con el software del modelo virtual)
 * el siguiente programa solo está pensado para realizar la lecura y escritua de los angulos en los servomotores que hacen las veces de actuadores en el modelo físico del robot.
 * este archivo está pensado solo para la comunicación entre modelo físico y computadora principal, para el entrenamiento, se presenta el programa EntrenamientoProgramado.ino
-* 
+*
 */
 
 #include <Servo.h>
@@ -25,7 +25,7 @@ void setup()
 void loop()
 {
   char strAnguloBase[5], strAnguloBrazo[5], strAnguloSoporte[5];
-  
+
   while(1)
   {
     if(Serial.available() > 0)
@@ -33,18 +33,18 @@ void loop()
       int tam = leer(strAnguloBase);
       int angulo = str2int(strAnguloBase,tam);
       servoBase.write(angulo);
-      
+
       while(!(Serial.available() > 0));
-      
+
       tam = leer(strAnguloBrazo);
       angulo = str2int(strAnguloBrazo,tam);
       int maped = map(angulo,0,180,180,0); //Es necesario invertir el valor del angulo, para conpensar el hecho de que el servo quedó al revés (lol)
       servoPunta.write(maped);
-      
+
       while(!(Serial.available() > 0)); //El tercer valor que se recibe es el del soporte
       tam = leer(strAnguloSoporte);
       angulo = str2int(strAnguloSoporte,tam);
-      servoSoporte.write(angulo); 
+      servoSoporte.write(angulo);
     }
   }
 }
@@ -74,7 +74,7 @@ int str2int(char *strnum,int tam)
 int leer(char *cad)
 {
   //Esta función lee los caracteres que se van reciviendo por el puerto serial hasta que aparece el caracter de final de linea '\n'
-  //retirna un entero con el tamanio de la cadena leida sin contar el caracter de final de linea (solo caracteres imprimibles)
+  //retorna un entero con el tamanio de la cadena leida sin contar el caracter de final de linea (solo caracteres imprimibles)
   int i = 0, Ndata;
   char *inChar;
   while(1)
@@ -84,8 +84,8 @@ int leer(char *cad)
       Ndata = Serial.available();
       Serial.readBytes(inChar,Ndata);
       cad[i] = *inChar;
-      if(cad[i] == '\n')
-        return i; 
+      if(cad[i] == '\0') //Se cambió el caracter '\n'->10 por el caracter nulo y poder usar la función strcmp( ) de C
+        return i;
       i++;
     }
   }
