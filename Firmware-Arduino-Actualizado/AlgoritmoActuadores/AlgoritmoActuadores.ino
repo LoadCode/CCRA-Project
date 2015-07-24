@@ -146,7 +146,7 @@ void Entrenamiento()
 
 void loop()
 {
-  char strAnguloBase[5], strAnguloBrazo[5], strAnguloSoporte[5],;
+  char strAnguloBase[5], strAnguloBrazo[5], strAnguloSoporte[5];
 
   while(1)
   {
