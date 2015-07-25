@@ -344,18 +344,18 @@ final int RANGO_DISTANCIA = 40; //el mouse es válido si se encuentra a menos de
 import processing.serial.*;
 Serial miPuerto = new Serial(this,Serial.list()[0],9600);
 
-//Compoenentes y variables para el control de los widgets
+//Interface gráfica (botones, etc)
 import controlP5.*;
 ControlP5 cp5;
 boolean capturar = false;
 boolean ejecutar = false;
+
 
 //variables para la captura de movimientos y ejecución del entrenamiento
 int nVertices = 0;
 int[] vertsPunta = new int[10];
 int[] vertsBase  = new int[10];
 int[] vertsSopor = new int[10];
-
 
 
                     //   Brazo(POSICION_BASE_X,POSICION_BASE_Y-180,180,0,180,100)                 
@@ -387,7 +387,6 @@ void setup()
   servoBase   = new Base(700,600,90,120,0);
   smooth();
   frameRate(30);
-  println(Serial.list());
   DibujarBrazoSoporte();
   brazoUno.DibujarBrazo();
 }
@@ -416,7 +415,6 @@ void draw()
     EscribirSerial(int(brazoUno.thetaServo));
     EscribirSerial(int(brazoDos.thetaServo));
     EscribirSerial(int(servoBase.thetaServo));
-    //println(servoBase.thetaServo);
   }
   
   brazoUno.DibujarBrazo();
@@ -432,6 +430,29 @@ void EscribirSerial(int angulo)
   miPuerto.write(anguloCadena);
   miPuerto.write(0);//miPuerto.write(10); //El 10 es caracter '\n' y el 0 es el caracter nulo. para poder usar la función strcmp() de C
 }
+
+public void Capturar(int theValue)
+{
+  //Como estos métodos se ejecutan una vez al arrancar el programa, se usa la variable de control con el nombre del método
+  //para verificar cuando se ha dado click y cuando la acción es solo del arranque del programa
+  if(capturar)
+  {
+    println(capturar);
+  }
+  capturar = true;
+}
+
+public void Ejecutar(int theValue)
+{
+  //Como estos métodos se ejecutan una vez al arrancar el programa, se usa la variable de control con el nombre del método
+  //para verificar cuando se ha dado click y cuando la acción es solo del arranque del programa
+  if(ejecutar)
+  {
+    println(ejecutar);
+  }
+  ejecutar = true;
+}
+
 
 void DibujarBrazoSoporte()
 {
