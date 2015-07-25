@@ -203,14 +203,14 @@ void Movimiento(uint8_t *servoTrainA,uint8_t *servoTrainB,uint8_t *servoTrainC,i
   {
     for(int i = 0;i < tam; i++)
     {
-      servoPunta.write((int)servoTrainA[i]);
+      servoPunta.write(map((int)servoTrainA[i],0,180,180,0));
       servoBase.write((int)servoTrainB[i]);
       servoSoporte.write((int)servoTrainC[i]);
       delay(11);
     }
     for(int i = tam-1; i>=0; i--)
     {
-      servoPunta.write((int)servoTrainA[i]);
+      servoPunta.write(map((int)servoTrainA[i],0,180,180,0));
       servoBase.write((int)servoTrainB[i]);
       servoSoporte.write((int)servoTrainC[i]);
       delay(11);

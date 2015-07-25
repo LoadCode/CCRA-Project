@@ -379,7 +379,7 @@ void setup()
      .setSize(150,25);
   cp5.addButton("Ejecutar")
      .setCaptionLabel("           Ejecutar Entrenamiento")
-     .setValue(0)
+     .setValue(1)
      .setPosition(70,130)
      .setSize(150,25);
   
@@ -452,10 +452,40 @@ public void Capturar(int theValue)
     vertsPunta[nVertices] = int(brazoDos.thetaServo);
     vertsBase[nVertices]  = int(brazoUno.thetaServo);
     vertsSopor[nVertices] = int(servoBase.thetaServo);
-    println("nVertices = "+nVertices+"  vertsPunta[nVertices] = "+vertsPunta[nVertices]+"  vertsBase[nVertices] = "+vertsBase[nVertices]+"  vertsSopor[nVertices] = "+vertsSopor[nVertices]);
+    println("nVertices = "+nVertices+"  vertsPunta[n] = "+vertsPunta[nVertices]+"  vertsBase[n] = "+vertsBase[nVertices]+"  vertsSopor[n] = "+vertsSopor[nVertices]);
     nVertices++;
   }
   capturar = true;
+}
+
+public void Ejecutar(int theValue)
+{
+  if(ejecutar)
+  {
+    //Se envia la orden de entrenamiento
+    miPuerto.write("Ent");
+    miPuerto.write(0);
+    
+    //Se envía el número de vertices en el entrenamiento
+    EscribirSerial(nVertices);
+    
+    for(int i = 0; i<nVertices; i++)
+    {  EscribirSerial(vertsPunta[i]);
+      println("vertsBase["+i+"] = "+vertsPunta[i]);
+    }
+    for(int i = 0; i<nVertices; i++)
+    {  EscribirSerial(vertsBase[i]);
+    println("vertsBase["+i+"] = "+vertsBase[i]);
+    }
+    
+    for(int i = 0; i<nVertices; i++)
+    {  EscribirSerial(vertsSopor[i]);
+    println("vertsBase["+i+"] = "+vertsSopor[i]);
+    }
+    println("nVerts-1 = "+(nVertices-1));
+    nVertices = 0;
+  }
+  ejecutar = true;
 }
 
 
