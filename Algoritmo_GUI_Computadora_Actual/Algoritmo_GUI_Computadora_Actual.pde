@@ -470,20 +470,15 @@ public void Ejecutar(int theValue)
     EscribirSerial(nVertices);
     
     for(int i = 0; i<nVertices; i++)
-    {  EscribirSerial(vertsPunta[i]);
-      println("vertsBase["+i+"] = "+vertsPunta[i]);
-    }
+      EscribirSerial(vertsPunta[i]);
+      
     for(int i = 0; i<nVertices; i++)
-    {  EscribirSerial(vertsBase[i]);
-    println("vertsBase["+i+"] = "+vertsBase[i]);
-    }
+      EscribirSerial(vertsBase[i]);
+      
+    for(int i = 0; i<nVertices; i++)
+      EscribirSerial(vertsSopor[i]);
     
-    for(int i = 0; i<nVertices; i++)
-    {  EscribirSerial(vertsSopor[i]);
-    println("vertsBase["+i+"] = "+vertsSopor[i]);
-    }
-    println("nVerts-1 = "+(nVertices-1));
-    nVertices = 0;
+    nVertices = 0; //Se reinicia el contador
   }
   ejecutar = true;
 }

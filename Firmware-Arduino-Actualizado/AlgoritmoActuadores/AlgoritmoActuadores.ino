@@ -19,14 +19,6 @@ void setup()
   servoSoporte.attach(11);
 }
 
-int DistMax2(int a, int b)
-{
-    //Retorna el mayor número entre los 2 argumentos
-    if(a>b)
-      return a;
-    else
-      return b;
-}
 
 int Pasos(uint8_t thetaA, uint8_t thetaB)
 {
@@ -218,3 +210,12 @@ void Movimiento(uint8_t *servoTrainA,uint8_t *servoTrainB,uint8_t *servoTrainC,i
   }
 }
 
+int DistMax2(int a, int b)
+{
+    //Retorna el mayor número entre los 2 argumentos
+    if(a>b)
+      return a;
+    else
+      return b;
+}
+*/
