@@ -342,8 +342,21 @@ final int RANGO_DISTANCIA = 40; //el mouse es válido si se encuentra a menos de
 
 //Comunicacion Serial
 import processing.serial.*;
-
 Serial miPuerto = new Serial(this,Serial.list()[0],9600);
+
+//Compoenentes y variables para el control de los widgets
+import controlP5.*;
+ControlP5 cp5;
+boolean capturar = false;
+boolean ejecutar = false;
+
+//variables para la captura de movimientos y ejecución del entrenamiento
+int nVertices = 0;
+int[] vertsPunta = new int[10];
+int[] vertsBase  = new int[10];
+int[] vertsSopor = new int[10];
+
+
 
                     //   Brazo(POSICION_BASE_X,POSICION_BASE_Y-180,180,0,180,100)                 
                     
@@ -356,6 +369,20 @@ Base servoBase;
 void setup()
 {
   size(ANCHO_VENTANA,ALTO_VENTANA);
+  
+  //GUI elements
+  cp5 = new ControlP5(this);
+  cp5.addButton("Capturar")
+     .setCaptionLabel("           Capturar Movimiento")
+     .setValue(0)
+     .setPosition(70,100)
+     .setSize(150,25);
+  cp5.addButton("Ejecutar")
+     .setCaptionLabel("           Ejecutar Entrenamiento")
+     .setValue(0)
+     .setPosition(70,130)
+     .setSize(150,25);
+  
   strokeWeight(20);
   servoBase   = new Base(700,600,90,120,0);
   smooth();
@@ -414,6 +441,21 @@ void DibujarBrazoSoporte()
   fill(255);
   strokeWeight(4);
   ellipse(brazoUno.pivoteX,brazoUno.pivoteY,16,16);
+}
+
+
+public void Capturar(int theValue)
+{
+  //Rutina del botón Capturar Movimiento
+  if(capturar)
+  {
+    vertsPunta[nVertices] = int(brazoDos.thetaServo);
+    vertsBase[nVertices]  = int(brazoUno.thetaServo);
+    vertsSopor[nVertices] = int(servoBase.thetaServo);
+    println("nVertices = "+nVertices+"  vertsPunta[nVertices] = "+vertsPunta[nVertices]+"  vertsBase[nVertices] = "+vertsBase[nVertices]+"  vertsSopor[nVertices] = "+vertsSopor[nVertices]);
+    nVertices++;
+  }
+  capturar = true;
 }
 
 
