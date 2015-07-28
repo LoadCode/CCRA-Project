@@ -138,20 +138,21 @@ void Entrenamiento()
 
 void loop()
 {
-  char strAnguloBase[5], strAnguloBrazo[5], strAnguloSoporte[5];
+  char strRecept[5], strAnguloBase[5], strAnguloBrazo[5], strAnguloSoporte[5];
 
   while(1)
   {
     if(Serial.available() > 0)
     {
-      int tam = leer(strAnguloBase);
-      if(!(strcmp(strAnguloBase,"Ent") == 0))
+      int tam = leer(strRecept);
+      if(strcmp(strRecept,"In") == 0 ) // al cadena "In" indica el incio de una trama de datos (Este preamblo brinda sincronizmo)
 	  {
+                while(!(Serial.available() > 0)); //Espera por el ángulo de del brazo intermedio (brazo base)
+                tam = leer(strAnguloBase);
 	  	int angulo = str2int(strAnguloBase,tam);
 		servoBase.write(angulo);
 
-		while(!(Serial.available() > 0));
-
+		while(!(Serial.available() > 0)); //Espera por el ángulo de la punta
 		tam = leer(strAnguloBrazo);
 		angulo = str2int(strAnguloBrazo,tam);
 		int maped = map(angulo,0,180,180,0); //Es necesario invertir el valor del angulo, para conpensar el hecho de que el servo quedó al revés (lol)
@@ -162,7 +163,7 @@ void loop()
 		angulo = str2int(strAnguloSoporte,tam);
 		servoSoporte.write(angulo);
 	  }
-	  else if(strcmp(strAnguloBase,"Ent") == 0)
+	  else if(strcmp(strRecept,"Ent") == 0)
 	  {
 	  	//Si lo que llegó fue la cadena que indica el entramiento, se ejecuta el siguiente código
 	  	Entrenamiento();
@@ -210,12 +211,3 @@ void Movimiento(uint8_t *servoTrainA,uint8_t *servoTrainB,uint8_t *servoTrainC,i
   }
 }
 
-int DistMax2(int a, int b)
-{
-    //Retorna el mayor número entre los 2 argumentos
-    if(a>b)
-      return a;
-    else
-      return b;
-}
-*/
