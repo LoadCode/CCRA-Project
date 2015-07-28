@@ -409,12 +409,17 @@ void draw()
     servoBase.CalcularAngulo(mouseX,mouseY);
     
   periodo++;
-  if(periodo == 2)
+  if(periodo == 2) //Como la funcion DRAW se ejecuta 30 veces por segundo aproximadamente, esta condicion y la variable periodo permiten controlar la tasa de transmisión
   {
-    periodo = 0;
+    
+    //Se envia el preambulo "In"
+    miPuerto.write("In");
+    miPuerto.write(0);
+    
     EscribirSerial(int(brazoUno.thetaServo));
     EscribirSerial(int(brazoDos.thetaServo));
     EscribirSerial(int(servoBase.thetaServo));
+    periodo = 0;
   }
   
   brazoUno.DibujarBrazo();
@@ -429,28 +434,6 @@ void EscribirSerial(int angulo)
   anguloCadena = Integer.toString(angulo);
   miPuerto.write(anguloCadena);
   miPuerto.write(0);//miPuerto.write(10); //El 10 es caracter '\n' y el 0 es el caracter nulo. para poder usar la función strcmp() de C
-}
-
-public void Capturar(int theValue)
-{
-  //Como estos métodos se ejecutan una vez al arrancar el programa, se usa la variable de control con el nombre del método
-  //para verificar cuando se ha dado click y cuando la acción es solo del arranque del programa
-  if(capturar)
-  {
-    println(capturar);
-  }
-  capturar = true;
-}
-
-public void Ejecutar(int theValue)
-{
-  //Como estos métodos se ejecutan una vez al arrancar el programa, se usa la variable de control con el nombre del método
-  //para verificar cuando se ha dado click y cuando la acción es solo del arranque del programa
-  if(ejecutar)
-  {
-    println(ejecutar);
-  }
-  ejecutar = true;
 }
 
 
@@ -468,6 +451,10 @@ void DibujarBrazoSoporte()
 public void Capturar(int theValue)
 {
   //Rutina del botón Capturar Movimiento
+  
+  //Como estos métodos se ejecutan una vez al arrancar el programa, se usa la variable de control con el nombre del método
+  //para verificar cuando se ha dado click y cuando la acción es solo del arranque del programa
+  
   if(capturar)
   {
     vertsPunta[nVertices] = int(brazoDos.thetaServo);
@@ -481,6 +468,11 @@ public void Capturar(int theValue)
 
 public void Ejecutar(int theValue)
 {
+  //Rutina del botón Ejecutar Entrenamiento
+  
+  
+  //Como estos métodos se ejecutan una vez al arrancar el programa, se usa la variable de control con el nombre del método
+  //para verificar cuando se ha dado click y cuando la acción es solo del arranque del programa
   if(ejecutar)
   {
     //Se envia la orden de entrenamiento
